@@ -1,0 +1,31 @@
+{% extends 'template.html' %}
+
+{% block body %}
+<div class="container">
+  <h2 class="my-3">Resolution Finishing Statistic</h2>
+  <div class="col-xs-12 col-md-6 float-right">
+    <div class="mb-3">
+      <canvas id="resolution-finishing-bar-chart"></canvas>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <div class="mb-3">
+      <canvas id="resolution-finishing-line-chart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="text-justify">
+    <ul>
+      <li><i><b><u>Unfinished</u></b></i> : When your ongoing resolution percentage is less than 60%</li>
+      <li><i><b><u>Almost</u></b></i> : When your ongoing resolution percentage is greater than 60%</li>
+      <li><i><b><u>Finished</u></b></i> : When your ongoing resolution percentage is 100%</li>
+    </ul>
+    <p>
+      These charts show how far you go with your resolution. <br>
+      The number defines the amount of resolution that corresponds to the 3 label on the bottom.
+    </p>
+  </div>
+</div>
+{% endblock %}

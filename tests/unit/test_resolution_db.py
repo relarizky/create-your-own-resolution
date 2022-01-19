@@ -43,8 +43,7 @@ def test_fetch_all_resolution_row():
 def test_delete_resolution_row():
     """test delete existing resolution row from database"""
 
-    resolution = Resolution.query.first()
-    resolution.remove()
+    Resolution.query.delete()
     check_resolution = Resolution.query.first()
 
     assert check_resolution is None
