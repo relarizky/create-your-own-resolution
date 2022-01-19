@@ -7,7 +7,7 @@ api = Api(
     prefix="/api",
     doc="/api/doc/",
     title="Resolution API",
-    description="API user for managing your resolution"
+    description="API for managing your resolution"
 )
 
 
@@ -32,14 +32,8 @@ class ResolutionAPI(Resource):
         description = user_input.get("description")
 
         # add new resolution
-        try:
-            new_resolution = Resolution(resolution, percentage, description)
-            new_resolution.save()
-        except Exception as error:
-            return {
-                "status": False,
-                "message": "can't add new resolution"
-            }, 500
+        new_resolution = Resolution(resolution, percentage, description)
+        new_resolution.save()
 
         return {
             "status": True,
@@ -59,7 +53,7 @@ class ResolutionAPIWithId(Resource):
             # can't find resolution row with given id
             return {
                 "status": False,
-                "message": "can't find user with the given id"
+                "message": "can't find resolution with the given id"
             }, 404
 
         return {"status": True, "data": resolution.jsonify()}, 200
@@ -73,17 +67,11 @@ class ResolutionAPIWithId(Resource):
             # can't find resolution row with given id
             return {
                 "status": False,
-                "message": "can't find user with the given id"
+                "message": "can't find resolution with the given id"
             }, 404
 
-        try:
-            # remove resolution with the given id
-            resolution.remove()
-        except Exception as error:
-            return {
-                "status": False,
-                "message": "can't delete resolution"
-            }, 500
+        # remove resolution with the given id
+        resolution.remove()
 
         return {
             "status": True,

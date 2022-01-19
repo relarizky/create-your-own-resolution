@@ -19,7 +19,7 @@ def create_app(**config: dict) -> Flask:
 
     db.init_app(app)
     api.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app, db)
 
     from app.controller import home_bp
 

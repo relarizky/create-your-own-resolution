@@ -39,9 +39,23 @@ def test_api_fetch_single_row(client):
 
     fetch = client.get("/api/resolution/1")
     response = fetch.get_json()
+    response_data = response.get("data")
+    response_status = response.get("status")
 
-    assert type(response) is dict
-    assert response != {}
+    assert response_status is True
+    assert type(response_data) is dict
+
+
+def test_api_fetch_single_row_fail(client):
+    """test fetch single row from API"""
+
+    fetch = client.get("/api/resolution/10")
+    response = fetch.get_json()
+    response_status = response.get("status")
+    response_message = response.get("message")
+
+    assert response_status is False
+    assert response_message == "can't find resolution with the given id"
 
 
 def test_api_delete_single_row(client):
@@ -54,3 +68,15 @@ def test_api_delete_single_row(client):
 
     assert response_status is True
     assert response_message == "successfully deleted resolution"
+
+
+def test_api_delete_single_row_fail(client):
+    """test delete unexisting single row from API"""
+
+    request = client.delete("/api/resolution/19")
+    response = request.get_json()
+    response_status = response.get("status")
+    response_message = response.get("message")
+
+    assert response_status is False
+    assert response_message == "can't find resolution with the given id"
