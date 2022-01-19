@@ -23,7 +23,7 @@ def create_app(**config: dict) -> Flask:
 
     from app.controller import home_bp
 
-    api.add_resource(ResolutionAPI, "/resolution", "/resolution/")
+    api.add_resource(ResolutionAPI, "/resolution/")
     api.add_resource(ResolutionAPIWithId, "/resolution/<int:id>")
     app.register_blueprint(home_bp, url_prefix="/")
 
