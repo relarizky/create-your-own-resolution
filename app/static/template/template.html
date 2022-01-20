@@ -73,73 +73,6 @@
       </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="view-resolution" tabindex="-1" role="dialog" aria-labelledby="add-resolution-modal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="add-resolution-title">
-              Your Resolution
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#" method="POST">
-              <div class="form-group">
-                <label for="resolution">Resolution :</label>
-                <input type="text" name="resolution" class="form-control" aria-describedby="your-resolution" value="Learning Linux System Administration" disabled>
-              </div>
-              <div class="form-group">
-                <label for="description-or-notes">Description / Notes :</label>
-                <textarea class="form-control" name="description" rows="5" disabled>Sedang memahami file system di linux</textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <!--<button type="button" class="btn btn-primary">Submit</button>-->
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade bd-example-modal-lg" id="edit-resolution" tabindex="-1" role="dialog" aria-labelledby="add-new-modal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="add-new-title">
-              Edit Resolution
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#" method="POST">
-              <div class="form-group">
-                <label for="resolution">Resolution :</label>
-                <input type="text" name="resolution" class="form-control" aria-describedby="your-resolution" value="Learning Linux System Administration" placeholder="your resolution">
-              </div>
-              <div class="form-group">
-                <label for="description-or-notes">Description / Notes :</label>
-                <textarea class="form-control" name="description" rows="5" placeholder="your description / notes">Sedang memahami file system dilinux dan sedang belajar tentang network administration</textarea>
-              </div>
-              <div class="form-group">
-                <label for="percentage">Percentage Of Your Progress :</label>
-                <input type="text" id="number" class="form-control" value="0%" disabled>
-                <input type="range" id="percentage" class="form-control" name="percentage" value=0 min=0 max=100 step=1>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Submit</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="modal fade" id="delete-resolution" tabindex="-1" role="dialog" aria-labelledby="add-new-modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -171,18 +104,39 @@
     <script src="{{url_for('static', filename='js/jquery.dataTables.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/resolution.chart.js')}}"></script>
-    <script src="{{url_for('static', filename='js/api.js')}}"></script>
+    <script src="{{url_for('static', filename='js/api.min.js')}}"></script>
     <script type="text/javascript">
       $(document).ready(function (){
         $('#resolution-table').DataTable({
+          "lengthChange": false,
+          "pageLength": 5,
+          "bFilter": false,
+          "order": [1, "asc"],
           "ajax": {
             "url": api_endpoint,
             "method": "GET"
           },
           "columns": [
-            {"data": "resolution"},
-            {"data": "percentage"},
-            {"data": "data.id"}
+            {
+              "data": function (data){
+                var words = "";
+                var split = data.resolution.split(" ");
+                split.forEach(function(word){
+                  words += word[0].toUpperCase() + word.slice(1) + " ";
+                });
+                return words;
+              }
+            },
+            {
+              "data": function(data){
+                return data.percentage + "%";
+              }
+            },
+            {
+              "data": function (data){
+                return create_view_button(data) + " " + create_edit_button(data) + " " + create_delete_button(data);
+              }
+            }
           ]
         });
         $('#percentage').on('input change', function (){
