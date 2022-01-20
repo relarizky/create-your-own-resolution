@@ -51,6 +51,7 @@ class Resolution(db.Model):
         """jsonify returning row"""
 
         return {
+            "id": self.id,
             "resolution": self.resolution,
             "percentage": self.percentage,
             "description": self.description

@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap4-neon-glow.min.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel='stylesheet' href='//cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
-
   </head>
   <body>
 
@@ -58,17 +57,17 @@
             <form action="#" method="POST">
               <div class="form-group">
                 <label for="resolution">Resolution :</label>
-                <input type="text" name="resolution" class="form-control" aria-describedby="your-resolution" placeholder="your resolution">
+                <input type="text" id="resolution" class="form-control" aria-describedby="your-resolution" placeholder="your resolution">
               </div>
               <div class="form-group">
                 <label for="description-or-notes">Description / Notes :</label>
-                <textarea class="form-control" name="description" rows="5" placeholder="your description / notes"></textarea>
+                <textarea class="form-control" id="description" name="description" rows="5" placeholder="your description / notes"></textarea>
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="add_new_resolution()">Submit</button>
           </div>
         </div>
       </div>
@@ -164,7 +163,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -176,11 +175,14 @@
     <script type="text/javascript">
       $(document).ready(function (){
         $('#resolution-table').DataTable({
-          "lengthChange": false,
-          "pageLength": 5,
-          "bFilter": false,
-          "order": [
-            [1, "asc"]
+          "ajax": {
+            "url": api_endpoint,
+            "method": "GET"
+          },
+          "columns": [
+            {"data": "resolution"},
+            {"data": "percentage"},
+            {"data": "data.id"}
           ]
         });
         $('#percentage').on('input change', function (){

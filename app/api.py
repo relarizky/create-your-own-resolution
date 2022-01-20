@@ -19,18 +19,24 @@ def error_handler(error):
 
 
 # API user input and response
-api_input = api.model("Resolution", {
+api_input = api.model("Resolution Input", {
     "resolution": fields.String(required=True),
+    "percentage": fields.Integer,
+    "description": fields.String
+})
+api_output = api.model("Resolution Output", {
+    "id": fields.Integer,
+    "resolution": fields.String,
     "percentage": fields.Integer,
     "description": fields.String
 })
 api_response_data = api.model("API response with data", {
     "status": fields.Boolean,
-    "data": fields.Nested(api_input)
+    "data": fields.Nested(api_output)
 })
 api_response_multiple_data = api.model("API response with multiple data", {
     "status": fields.Boolean,
-    "data": fields.List(fields.Nested(api_input))
+    "data": fields.List(fields.Nested(api_output))
 })
 api_response_message = api.model("API response with message", {
     "status": fields.Boolean,
