@@ -28,6 +28,12 @@ $ pytest -v tests/unit tests/integration
 <img src="https://github.com/relarizky/create-your-own-resolution/blob/master/screenshot/resolution-home-1.png?raw=true" height=50% width=48%> <img src="https://github.com/relarizky/create-your-own-resolution/blob/master/screenshot/resolution-statistic-1.png?raw=true"
 height=50% width=48%>
 
+## ToDo
+
+<ul>
+  <li>adding prioritizing feature</li>
+</ul>
+
 ## Demo
 
 https://create-resolution.herokuapp.com/home <br>
